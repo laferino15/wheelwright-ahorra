@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Odoo
+*.log
+.sessions/
+filestore/
+
+# Configuraciones privadas
+.env
+.env.*
+*.conf
+
+# Bases de datos y backups
+*.dump
+*.sql
+*.backup
+
+# Editores
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
