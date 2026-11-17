@@ -29,3 +29,6 @@ filestore/
 # Sistema operativo
 .DS_Store
 Thumbs.db
+# Resultados locales de las pruebas
+tests/local/resultado_jornada_completa.json
+tests/local/RESULTADO_JORNADA.md

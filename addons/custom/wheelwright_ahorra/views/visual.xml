@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <template id="marketplace_shell" inherit_id="website.layout" priority="1000" name="Identidad visual wheel-ahorra">
+  <xpath expr="//div[@id='wrapwrap']" position="attributes"><attribute name="t-attf-class" add="wah-site" separator=" "/></xpath>
+  <xpath expr="//div[@id='wrapwrap']/header" position="replace">
+   <header id="top" t-if="not no_header" class="wah-header" data-anchor="true">
+    <div class="wah-topline"><div class="container"><span>El mercado de tu ciudad</span><span><i class="fa fa-map-marker" aria-hidden="true"/> Wheelwright, Santa Fe</span></div></div>
+    <div class="container wah-mainbar">
+     <a class="wah-brand" href="/" aria-label="wheel-ahorra, inicio"><span class="wah-brand-icon" aria-hidden="true">w.</span><span>wheel<span class="wah-brand-light">-ahorra</span><small>COMPRÁ CERCA. ELEGÍ LOCAL.</small></span></a>
+     <form action="/shop" method="get" class="wah-search-form" role="search"><i class="fa fa-search" aria-hidden="true"/><input type="search" name="search" placeholder="¿Qué necesitás hoy?" aria-label="Buscar productos" t-att-value="request.params.get('search', '')"/><button type="submit">Buscar</button></form>
+     <ul class="wah-header-actions">
+      <li t-if="request.env.user._is_public()"><a href="/my/home" class="wah-account"><i class="fa fa-user-o" aria-hidden="true"/><span>Ingresar</span></a></li>
+      <li t-else=""><details class="wah-account-menu"><summary class="wah-account" aria-label="Opciones de mi cuenta"><i class="fa fa-user-o" aria-hidden="true"/><span>Mi cuenta</span></summary><div class="wah-account-dropdown"><a href="/my/home">Mi cuenta</a><a href="/my/orders">Mis compras</a><a href="/mi-comercio">Mi comercio</a><a href="/odoo" groups="base.group_user">Administración</a><a href="/web/session/logout?redirect=/">Cerrar sesión</a></div></details></li>
+      <t t-call="website_sale.header_cart_link"><t t-set="_item_class" t-value="'wah-cart-item'"/><t t-set="_link_class" t-value="'wah-cart'"/><t t-set="_icon" t-value="True"/><t t-set="_text" t-value="True"/><t t-set="_icon_wrap_class" t-value="'wah-cart-symbol'"/><t t-set="_badge_class" t-value="'wah-cart-count'"/></t>
+     </ul>
+    </div>
+    <nav class="wah-mainnav" aria-label="Navegación principal"><div class="container"><a href="/" t-att-class="'active' if request.httprequest.path == '/' else ''">Inicio</a><a href="/shop" t-att-class="'active' if request.httprequest.path.startswith('/shop') else ''">Tienda</a><a href="/#categorias">Categorías</a><a href="/#como-comprar">Cómo comprar</a><a href="/my/orders">Mis compras</a><a href="/mi-comercio" t-att-class="'active' if request.httprequest.path.startswith('/mi-comercio') else ''">Mi comercio</a><a href="/vender" class="wah-sell-link">Quiero vender <span aria-hidden="true">↗</span></a></div></nav>
+   </header>
+  </xpath>
+  <xpath expr="//footer[@id='bottom']" position="replace">
+   <footer id="bottom" t-if="not no_footer" class="wah-footer" data-anchor="true"><div class="container"><div class="wah-footer-grid"><div><a class="wah-brand" href="/"><span class="wah-brand-icon" aria-hidden="true">w.</span><span>wheel<span class="wah-brand-light">-ahorra</span></span></a><p>Los comercios de Wheelwright,<br/>en un mismo lugar.</p><span class="wah-footer-location"><i class="fa fa-map-marker" aria-hidden="true"/> Wheelwright · Santa Fe</span></div><div><h3>Para tu compra</h3><a href="/shop">Explorar productos</a><a href="/#categorias">Ver categorías</a><a href="/my/orders">Seguir mis pedidos</a></div><div><h3>Para tu comercio</h3><a href="/vender">Sumar mi local</a><a href="/mi-comercio">Administrar mi comercio</a><a href="/mi-comercio/pedidos">Pedidos para preparar</a></div></div><div class="wah-footer-bottom"><span>© wheel-ahorra · El valor de comprar cerca.</span><a href="/#como-comprar">Cómo funciona <span aria-hidden="true">↗</span></a></div></div></footer>
+  </xpath>
+ </template>
+ <template id="shop_visual_intro" inherit_id="website_sale.products" name="Presentación del catálogo">
+  <xpath expr="//t[@t-call='website_sale.filmstrip_categories']" position="replace"/>
+  <xpath expr="//div[@id='oe_structure_website_sale_products_1']" position="before">
+   <section class="wah-shop-intro"><div class="container"><div class="wah-shop-title"><div><span class="wah-eyebrow wah-green">COMPRÁ EN WHEELWRIGHT</span><h1 t-esc="category.name if category else 'Tu compra de todos los días.'"/><p>Elegí lo que necesitás y conocé el local que lo vende.</p></div><span class="wah-shop-stamp"><i class="fa fa-shopping-basket" aria-hidden="true"/> Cerca tuyo.</span></div><nav class="wah-category-chips" aria-label="Categorías de productos"><a href="/shop" t-att-class="'active' if not category else ''">Todo el catálogo</a><a t-foreach="request.env['product.public.category'].search([('website_id','in',[False,website.id]),('parent_id','=',False)], order='sequence, id')" t-as="wah_category" t-att-href="'/shop/category/%s' % wah_category.id" t-att-class="'active' if category and category.id == wah_category.id else ''" t-esc="wah_category.name"/></nav></div></section>
+  </xpath>
+ </template>
+</odoo>

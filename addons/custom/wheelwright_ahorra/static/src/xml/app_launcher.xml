@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+ <t t-name="wheelwright_ahorra.AppLauncher">
+  <div class="wah-app-launcher" t-att-class="props.className" t-att-aria-busy="state.busy ? 'true' : 'false'">
+   <div class="wah-app-shell">
+    <div class="wah-app-heading"><div><span class="wah-app-kicker">WHEEL-AHORRA · ADMINISTRACIÓN</span><h1>Mis aplicaciones</h1></div><a href="/" class="wah-app-store">Ir a la tienda <span aria-hidden="true">↗</span></a></div>
+    <div class="wah-app-search" role="search"><i class="fa fa-search" aria-hidden="true"/><input t-ref="search" type="search" t-model="state.query" t-on-keydown="onSearchKey" placeholder="Buscar módulos o menús…" aria-label="Buscar módulos o menús" autocomplete="off"/><button t-if="state.query" type="button" t-on-click="() => this.state.query = ''" aria-label="Limpiar búsqueda"><i class="fa fa-times" aria-hidden="true"/></button></div>
+    <div class="wah-app-grid" aria-label="Aplicaciones disponibles"><a t-foreach="entries" t-as="entry" t-key="entry.id" t-att-href="entry.href" t-att-class="'wah-app-tile' + (currentAppId === entry.app.id ? ' wah-app-selected' : '')" t-on-click="(ev) => this.open(entry, ev)" t-att-data-menu-id="entry.id"><span class="wah-app-icon"><i t-if="fontIcon(entry)" t-att-class="fontIcon(entry)" t-att-style="iconStyle(entry)" aria-hidden="true"/><img t-else="" t-att-src="icon(entry)" alt="" width="56" height="56"/></span><span class="wah-app-name" t-esc="entry.name"/><small t-if="entry.subtitle" class="wah-app-parent" t-esc="entry.subtitle"/></a></div>
+    <div t-if="!entries.length" class="wah-app-empty" role="status"><i class="fa fa-search" aria-hidden="true"/><h2>No encontramos módulos con esa búsqueda</h2><p>Probá con otro nombre o limpiá el buscador.</p><button type="button" class="btn btn-primary" t-on-click="() => this.state.query = ''">Ver aplicaciones</button></div>
+   </div>
+  </div>
+ </t>
+ <t t-name="wheelwright_ahorra.AppLauncherNavbar" t-inherit="web.NavBar" t-inherit-mode="extension"><xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="replace"><div t-if="!isScopedApp" class="o_navbar_apps_menu wah-app-home"><button type="button" class="o_menu_toggle border-0" title="Aplicaciones" aria-label="Ver todas las aplicaciones" data-hotkey="h" t-on-click="openWheelApps"><i class="oi oi-apps" aria-hidden="true"/></button><a t-if="this.ui.isSmall" href="#" class="o_menu_toggle border-0" title="Menús del módulo" aria-label="Menús del módulo" t-on-click.prevent="_openAppMenuSidebar"><t t-call="web.NavBar.AppsMenu.Sidebar"/></a></div><t t-else="" t-call="web.NavBar.AppsMenu"><t t-set="apps" t-value="menuService.getApps()"/></t></xpath></t>
+</templates>

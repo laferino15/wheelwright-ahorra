@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <template id="cart_store_labels" inherit_id="website_sale.cart_lines" name="Comercio en carrito">
+  <xpath expr="//h6[@t-out='line._get_line_header()']" position="after">
+   <span t-if="line.wah_store_name" class="wah-store-label d-block w-100"><i class="fa fa-map-marker" aria-hidden="true"/> <t t-esc="line.wah_store_name"/></span>
+  </xpath>
+ </template>
+ <template id="summary_store_labels" inherit_id="website_sale.cart_summary_content" name="Comercio en resumen de compra">
+  <xpath expr="//td[@name='website_sale_cart_summary_product_name']/span[1]" position="after">
+   <small t-if="line.wah_store_name" class="wah-store-label" t-esc="line.wah_store_name"/>
+  </xpath>
+ </template>
+ <record id="order_stores_backend" model="ir.ui.view">
+  <field name="name">sale.order.wah.stores</field><field name="model">sale.order</field><field name="inherit_id" ref="sale.view_order_form"/>
+  <field name="arch" type="xml">
+   <xpath expr="//field[@name='order_line']/list/field[@name='name']" position="after"><field name="wah_store_name" optional="show"/></xpath>
+   <xpath expr="//notebook" position="inside"><page string="Preparación por comercio" invisible="not website_id"><p class="text-muted">Desglose para coordinar la preparación. Los subtotales corresponden a productos con impuestos; el envío se consulta en el total del pedido.</p><field name="wah_store_breakdown" nolabel="1" readonly="1"/></page></xpath>
+  </field>
+ </record>
+</odoo>

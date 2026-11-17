@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <template id="catalog_store_tile" inherit_id="website_sale.products_item" name="Comercio en tarjeta de producto">
+  <xpath expr="//h2[hasclass('o_wsale_products_item_title')]" position="after">
+   <div t-if="product.wah_store_name" class="wah-store-label"><i class="fa fa-map-marker" aria-hidden="true"/> <span t-field="product.wah_store_name"/></div>
+   <small t-if="product.wah_catalog_sample" class="wah-sample-label">Precio de prueba · Imagen ilustrativa</small>
+  </xpath>
+ </template>
+ <template id="catalog_store_detail" inherit_id="website_sale.product_title" name="Comercio en ficha de producto">
+  <xpath expr="//h1" position="after">
+   <div t-if="product.wah_store_name" class="wah-store-label wah-store-detail"><i class="fa fa-map-marker" aria-hidden="true"/> Vendido por <strong t-field="product.wah_store_name"/></div>
+   <p t-if="product.wah_catalog_sample" class="wah-sample-label">Catálogo inicial de prueba. Imagen ilustrativa. Precio, presentación y disponibilidad pendientes de validación por el comercio.</p>
+  </xpath>
+ </template>
+ <template id="catalog_store_home" inherit_id="wheelwright_ahorra.home_wheelwright" name="Comercio en portada">
+  <xpath expr="//a[hasclass('wah-product-name')]" position="after">
+   <span t-if="product.wah_store_name" class="wah-store-label" t-field="product.wah_store_name"/>
+   <small t-if="product.wah_catalog_sample" class="wah-sample-label">Precio de prueba · Imagen ilustrativa</small>
+  </xpath>
+ </template>
+ <record id="catalog_store_backend" model="ir.ui.view">
+  <field name="name">product.template.wah.store</field><field name="model">product.template</field><field name="inherit_id" ref="product.product_template_only_form_view"/>
+  <field name="arch" type="xml"><xpath expr="//field[@name='categ_id']" position="after"><field name="wah_store_id"/><field name="wah_catalog_sample"/></xpath></field>
+ </record>
+</odoo>

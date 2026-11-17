@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <record id="merchant_owner_rule" model="ir.rule"><field name="name">Comerciante: solo su local</field><field name="model_id" ref="model_wah_merchant"/><field name="groups" eval="[(4, ref('base.group_portal'))]"/><field name="domain_force">[('owner_id', '=', user.id)]</field></record>
+ <record id="merchant_product_owner_rule" model="ir.rule"><field name="name">Comerciante: solo sus productos</field><field name="model_id" ref="model_wah_merchant_product"/><field name="groups" eval="[(4, ref('base.group_portal'))]"/><field name="domain_force">[('merchant_id.owner_id', '=', user.id)]</field></record>
+ <record id="preparation_owner_rule" model="ir.rule"><field name="name">Preparación: solo pedidos del propio local</field><field name="model_id" ref="model_wah_preparation"/><field name="groups" eval="[(4, ref('base.group_portal'))]"/><field name="domain_force">[('merchant_id.owner_id', '=', user.id)]</field></record>
+ <record id="preparation_line_owner_rule" model="ir.rule"><field name="name">Preparación: solo productos del propio local</field><field name="model_id" ref="model_wah_preparation_line"/><field name="groups" eval="[(4, ref('base.group_portal'))]"/><field name="domain_force">[('preparation_id.merchant_id.owner_id', '=', user.id)]</field></record>
+</odoo>

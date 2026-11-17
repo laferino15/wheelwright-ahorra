@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wah_merchant_portal,Comercio propio portal,model_wah_merchant,base.group_portal,1,1,1,0
+access_wah_merchant_manager,Administrar comercios,model_wah_merchant,product.group_product_manager,1,1,1,0
+access_wah_merchant_product_portal,Productos propios portal,model_wah_merchant_product,base.group_portal,1,1,1,0
+access_wah_merchant_product_manager,Revisar productos,model_wah_merchant_product,product.group_product_manager,1,1,1,0
+access_wah_preparation_portal,Preparaciones propias portal,model_wah_preparation,base.group_portal,1,1,0,0
+access_wah_preparation_manager,Coordinar preparaciones,model_wah_preparation,product.group_product_manager,1,1,0,0
+access_wah_preparation_line_portal,Productos a preparar propios,model_wah_preparation_line,base.group_portal,1,0,0,0
+access_wah_preparation_line_manager,Productos a preparar administracion,model_wah_preparation_line,product.group_product_manager,1,0,0,0
+access_wah_courier_manager,Repartidores administracion,model_wah_courier,product.group_product_manager,1,1,1,0
+access_wah_collection_manager,Cobros administracion,model_wah_collection,product.group_product_manager,1,0,0,0
+access_wah_route_event_manager,Historial reparto administracion,model_wah_route_event,product.group_product_manager,1,0,0,0
+access_wah_collection_register_manager,Registrar cobro administracion,model_wah_collection_register,product.group_product_manager,1,1,1,1
+access_wah_collection_void_manager,Anular cobro administracion,model_wah_collection_void,product.group_product_manager,1,1,1,1
