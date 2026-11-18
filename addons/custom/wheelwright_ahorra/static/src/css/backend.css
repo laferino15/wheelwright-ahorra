@@ -1,0 +1,242 @@
+/* wheel-ahorra administration. Loaded only by web.assets_backend. */
+.o_web_client {
+    --wah-green: #07533f;
+    --wah-dark: #073e31;
+    --wah-yellow: #f5cf52;
+    --wah-paper: #f7f8f4;
+    --wah-border: #dfe7da;
+    --wah-ink: #193e32;
+    --primary: #07533f;
+    --primary-rgb: 7, 83, 63;
+    --link-color: #07533f;
+    --link-hover-color: #073e31;
+    --o-action: #07533f;
+    background: var(--wah-paper);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Navigation: shared across the administrative apps used by the business. */
+.o_web_client .o_main_navbar {
+    --NavBar-entry-color: #ffffff;
+    --NavBar-entry-backgroundColor: transparent;
+    --NavBar-entry-backgroundColor--hover: #ffffff16;
+    background: var(--wah-dark) !important;
+    border-bottom: 3px solid var(--wah-yellow);
+    box-shadow: none;
+}
+.o_web_client .o_main_navbar .o_menu_brand {
+    color: #fff !important;
+    font-weight: 700;
+    letter-spacing: -.3px;
+}
+.o_web_client .o_main_navbar .o_menu_toggle,
+.o_web_client .o_main_navbar .o_menu_sections > .dropdown > button,
+.o_web_client .o_main_navbar .o_menu_sections > button,
+.o_web_client .o_main_navbar .o_menu_sections > a,
+.o_web_client .o_main_navbar .o_menu_systray > div > button {
+    color: #fff !important;
+    background-color: transparent;
+}
+.o_web_client .o_main_navbar .o_menu_toggle:hover,
+.o_web_client .o_main_navbar .o_menu_sections > .dropdown > button:hover,
+.o_web_client .o_main_navbar .o_menu_sections > button:hover {
+    background-color: #ffffff16;
+}
+.o_web_client .o_main_navbar .o_menu_sections .show > button {
+    background: #ffffff20;
+    color: var(--wah-yellow) !important;
+}
+.o_web_client .dropdown-menu {
+    border-color: var(--wah-border);
+    border-radius: 9px;
+    box-shadow: 0 8px 26px #073e3114;
+}
+.o_web_client .dropdown-item.active,
+.o_web_client .dropdown-item:active,
+.o_web_client .o-dropdown-item.focus {
+    background-color: #e7f0e1;
+    color: var(--wah-green);
+}
+
+/* Controls retain Odoo sizing, keyboard behavior and semantic danger states. */
+.o_web_client .btn-primary {
+    --btn-bg: #07533f;
+    --btn-border-color: #07533f;
+    --btn-color: #ffffff;
+    --btn-hover-bg: #073e31;
+    --btn-hover-border-color: #073e31;
+    --btn-hover-color: #ffffff;
+    --btn-active-bg: #073e31;
+    --btn-active-border-color: #073e31;
+    --btn-active-color: #ffffff;
+    --btn-disabled-bg: #07533f;
+    --btn-disabled-border-color: #07533f;
+    --btn-focus-shadow-rgb: 7, 83, 63;
+}
+.o_web_client .btn-outline-primary {
+    --btn-color: #07533f;
+    --btn-border-color: #9ab698;
+    --btn-hover-bg: #07533f;
+    --btn-hover-color: #ffffff;
+    --btn-hover-border-color: #07533f;
+    --btn-active-bg: #07533f;
+    --btn-active-border-color: #07533f;
+    --btn-active-color: #ffffff;
+}
+.o_web_client .btn { border-radius: 6px; }
+.o_web_client .btn-link { color: var(--wah-green); }
+.o_web_client .form-check-input:checked {
+    background-color: var(--wah-green);
+    border-color: var(--wah-green);
+}
+.o_web_client .form-control:focus,
+.o_web_client .form-select:focus,
+.o_web_client .o_input:focus {
+    border-color: #658d70;
+    box-shadow: 0 0 0 3px #07533f14;
+}
+.o_web_client .o_input:focus-visible,
+.o_web_client .btn:focus-visible,
+.o_web_client a:focus-visible {
+    outline: 2px solid #b78a08;
+    outline-offset: 2px;
+}
+.o_web_client .o_field_widget.o_required_modifier:not(.o_readonly_modifier) .o_input {
+    border-bottom-color: #658d70;
+}
+.o_web_client .o_control_panel {
+    background-color: #fff;
+    border-bottom: 1px solid var(--wah-border);
+}
+.o_web_client .o_control_panel .breadcrumb,
+.o_web_client .o_control_panel .breadcrumb-item.active {
+    color: var(--wah-ink);
+}
+.o_web_client .o_control_panel .breadcrumb a { color: var(--wah-green); }
+.o_web_client .o_control_panel .o_searchview {
+    border-color: #d6e1d0;
+    border-radius: 8px;
+    background: #fbfcf9;
+}
+.o_web_client .o_searchview .o_searchview_facet {
+    border-color: #d3dfce;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.o_web_client .o_searchview .o_searchview_facet .o_searchview_facet_label {
+    background: var(--wah-green);
+    color: white;
+}
+.o_web_client .o_searchview .o_searchview_facet .o_facet_values {
+    background: #edf3e8;
+    color: var(--wah-ink);
+}
+
+/* Record lists, forms and cards share the storefront's light surfaces. */
+.o_web_client .o_action_manager,
+.o_web_client .o_content,
+.o_web_client .o_form_view .o_form_sheet_bg {
+    background-color: var(--wah-paper);
+}
+.o_web_client .o_form_view .o_form_sheet {
+    border: 1px solid var(--wah-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 18px #073e3105;
+    background: #fff;
+}
+.o_web_client .o_form_view .oe_title h1,
+.o_web_client .o_form_view .o_form_label,
+.o_web_client .o_form_view .o_inner_group .o_wrap_label {
+    color: var(--wah-ink);
+}
+.o_web_client .o_form_view .o_horizontal_separator {
+    color: var(--wah-green);
+    border-color: var(--wah-border);
+    font-weight: 700;
+}
+.o_web_client .o_form_statusbar {
+    background: #fff;
+    border-bottom-color: var(--wah-border);
+}
+.o_web_client .o_statusbar_status .o_arrow_button.o_arrow_button_current {
+    color: var(--wah-green);
+    background-color: #e6efdf;
+    font-weight: 700;
+}
+.o_web_client .o_notebook .nav-tabs { border-color: var(--wah-border); }
+.o_web_client .o_notebook .nav-link.active {
+    color: var(--wah-green);
+    border-top: 3px solid var(--wah-green);
+    font-weight: 700;
+    background: #fff;
+}
+.o_web_client .o_notebook .nav-link:not(.active) { color: #607363; }
+.o_web_client .o_list_renderer .o_list_table {
+    --table-bg: #ffffff;
+    --table-striped-bg: #f7f9f4;
+    --table-hover-bg: #eef4e9;
+    border-color: #e4eade;
+}
+.o_web_client .o_list_renderer .o_list_table thead {
+    --table-bg: #edf2e8;
+    color: #36563e;
+}
+.o_web_client .o_list_renderer .o_list_table thead th {
+    background-color: #edf2e8;
+    border-bottom-color: #d8e2d1;
+    font-weight: 700;
+}
+.o_web_client .o_list_renderer .o_data_row.o_selected_row > td {
+    background-color: #e8f0e1;
+}
+.o_web_client .o_list_renderer .o_group_header {
+    background: #f0f4eb;
+    color: var(--wah-green);
+}
+.o_web_client .o_kanban_renderer { background-color: var(--wah-paper); }
+.o_web_client .o_kanban_record:not(.o_kanban_ghost) {
+    border-color: var(--wah-border);
+    border-radius: 10px;
+    box-shadow: 0 3px 12px #073e3105;
+}
+.o_web_client .o_kanban_record .o_kanban_record_title { color: var(--wah-ink); }
+.o_web_client .o_stat_info .o_stat_value { color: var(--wah-green); }
+.o_web_client .o_progressbar .o_progressbar_value { background-color: var(--wah-green); }
+.o_web_client .o-mail-Chatter { border-color: var(--wah-border); }
+
+@media (max-width: 767px) {
+    .o_web_client .o_form_view .o_form_sheet { border-radius: 0; }
+    .o_web_client .o_control_panel .o_searchview { border-radius: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .o_web_client .btn,
+    .o_web_client .o_kanban_record { transition: none; }
+}
+/* Respect an explicitly selected dark mode. */
+html[data-bs-theme="dark"] .o_web_client {
+    --wah-paper: #18251f;
+    --wah-border: #3a5142;
+    --wah-ink: #deeadf;
+}
+html[data-bs-theme="dark"] .o_web_client .o_control_panel,
+html[data-bs-theme="dark"] .o_web_client .o_form_view .o_form_sheet,
+html[data-bs-theme="dark"] .o_web_client .o_form_statusbar,
+html[data-bs-theme="dark"] .o_web_client .o_notebook .nav-link.active {
+    background: #202f26;
+}
+html[data-bs-theme="dark"] .o_web_client .o_searchview { background: #26382b; }
+html[data-bs-theme="dark"] .o_web_client .o_list_renderer .o_list_table {
+    --table-bg: #202f26;
+    --table-striped-bg: #24352a;
+    --table-hover-bg: #304635;
+}
+html[data-bs-theme="dark"] .o_web_client .o_list_renderer .o_list_table thead th {
+    background-color: #304635;
+    color: #deeadf;
+}
+
+.o_web_client .o_field_statusbar > .o_statusbar_status {
+    --o-statusbar-background-active: #e6efdf;
+    --o-statusbar-border-active: #a8c39b;
+    --o-statusbar-background-hover: #eef4e9;
+}

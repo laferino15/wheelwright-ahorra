@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <record id="settlement_company_rule" model="ir.rule">
+  <field name="name">Liquidaciones: compañías habilitadas</field>
+  <field name="model_id" ref="model_wah_settlement"/>
+  <field name="domain_force">[('company_id','in',company_ids)]</field>
+ </record>
+ <record id="settlement_line_company_rule" model="ir.rule">
+  <field name="name">Detalle liquidaciones: compañías habilitadas</field>
+  <field name="model_id" ref="model_wah_settlement_line"/>
+  <field name="domain_force">[('settlement_id.company_id','in',company_ids)]</field>
+ </record>
+</odoo>
