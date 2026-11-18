@@ -119,13 +119,21 @@ class MerchantPortal(http.Controller):
     def sell(self):
         return request.render('wheelwright_ahorra.merchant_landing')
 
-    @http.route('/mi-comercio', type='http', auth='user', website=True, methods=['GET'])
+    @http.route(['/mi-comercio', '/mi-comercio/productos', '/mi-comercio/stock'], type='http', auth='user', website=True, methods=['GET'])
     def home(self, **kw):
         store = self._store()
         if not store:
             return request.redirect('/mi-comercio/registro')
         products = request.env['wah.merchant.product'].search([('merchant_id', '=', store.id)])
-        return request.render('wheelwright_ahorra.merchant_dashboard', {
+        section = {'/mi-comercio/productos': 'products', '/mi-comercio/stock': 'stock'}.get(request.httprequest.path, 'home')
+        preparations = request.env['wah.preparation'].search([
+            ('merchant_id', '=', store.id), ('website_id', '=', request.website.id),
+            ('state', 'not in', ['delivered', 'cancelled'])], order='placed_at desc, id desc')
+        return request.render('wheelwright_ahorra.merchant_hub', {
+            'section': section, 'recent_orders': preparations[:5],
+            'metrics': {'products': len(products), 'orders': len(preparations),
+                        'empty': len(products.filtered(lambda p: p.stock_tracking and p.stock_quantity <= 0)),
+                        'ready': len(preparations.filtered(lambda p: p.state == 'ready'))},
             'store': store, 'products': products, 'page_name': 'merchant',
             'notice': {'saved': 'Los cambios se guardaron. Revisá el producto y envialo a revisión.',
                        'stock': 'Se actualizaron el stock y la disponibilidad del producto.',
@@ -197,7 +205,7 @@ class MerchantPortal(http.Controller):
                     if post.get('intent') == 'submit':
                         product.action_submit()
                 notice = 'submitted' if post.get('intent') == 'submit' else 'saved'
-                return request.redirect('/mi-comercio?notice=' + notice)
+                return request.redirect('/mi-comercio/productos?notice=' + notice)
             except (UserError, AccessError) as error:
                 return self._render_product(store, original_product, str(error), post)
         return self._render_product(store, product)
@@ -209,7 +217,7 @@ class MerchantPortal(http.Controller):
         try:
             with request.env.cr.savepoint():
                 product.action_submit()
-            return request.redirect('/mi-comercio?notice=submitted')
+            return request.redirect('/mi-comercio/productos?notice=submitted')
         except (UserError, AccessError) as error:
             return self._render_product(self._store(), product, str(error))
 
@@ -224,7 +232,7 @@ class MerchantPortal(http.Controller):
                     product.action_update_stock(post.get('stock_tracking') == '1',
                                                 (post.get('stock_quantity') or '0').replace(',', '.'),
                                                 post.get('available') == '1')
-                return request.redirect('/mi-comercio?notice=stock')
+                return request.redirect('/mi-comercio/stock?notice=stock')
             except (UserError, AccessError) as exc:
                 error = str(exc)
         return request.render('wheelwright_ahorra.merchant_stock_form', {

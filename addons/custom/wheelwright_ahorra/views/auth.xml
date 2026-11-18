@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <template id="auth_layout" inherit_id="website.login_layout" name="Ingreso wheel-ahorra" priority="1000">
+  <xpath expr="//div[hasclass('oe_website_login_container')]" position="replace">
+   <t t-set="no_header" t-value="True"/><t t-set="no_footer" t-value="True"/>
+   <t t-set="wah_signup" t-value="request.httprequest.path == '/web/signup'"/>
+   <t t-set="wah_reset" t-value="request.httprequest.path == '/web/reset_password'"/>
+   <t t-set="additional_title" t-value="'Crear mi cuenta' if wah_signup else ('Recuperar acceso' if wah_reset else 'Ingresar')"/>
+   <div id="wrap" class="wah-auth">
+    <header class="wah-auth-top"><a href="/" class="wah-brand" aria-label="wheel-ahorra, inicio"><span class="wah-brand-icon" aria-hidden="true">w.</span><span>wheel<span class="wah-brand-light">-ahorra</span><small>COMPRÁ CERCA. ELEGÍ LOCAL.</small></span></a><a href="/shop" class="wah-auth-back">Volver a la tienda <span aria-hidden="true">↗</span></a></header>
+    <div class="wah-auth-card">
+     <aside class="wah-auth-story">
+      <span class="wah-auth-eyebrow">EL MERCADO DE WHEELWRIGHT</span>
+      <h2>Lo de siempre.<br/><em>Más cerca tuyo.</em></h2>
+      <p>Tus comercios, tus productos y tu ciudad.<br/>Todo en un mismo lugar.</p>
+      <div class="wah-auth-art"><span class="wah-auth-circle"/><img src="/wheelwright_ahorra/static/src/img/compras.svg" alt="Bolsa con productos de los comercios locales"/></div>
+      <div class="wah-auth-local"><i class="fa fa-map-marker" aria-hidden="true"/><span>Hecho para Wheelwright.<br/><strong>Elegí local, comprá cerca.</strong></span></div>
+     </aside>
+     <section class="wah-auth-panel" aria-labelledby="wah-auth-title">
+      <div class="wah-auth-heading"><span class="wah-auth-eyebrow">TU CUENTA, MÁS CERCA</span>
+       <h1 id="wah-auth-title"><t t-if="wah_signup">Sumate a wheel-ahorra</t><t t-elif="wah_reset">Recuperá tu acceso</t><t t-else="">Qué bueno verte de nuevo</t></h1>
+       <p><t t-if="wah_signup">Creá tu cuenta para comprar, seguir tus pedidos o registrar tu comercio.</t><t t-elif="wah_reset">Seguí los pasos para volver a entrar a tu cuenta.</t><t t-else="">Ingresá para seguir tus compras o gestionar tu comercio.</t></p>
+      </div>
+      <div class="oe_website_login_container wah-auth-form" t-out="0"/>
+      <p class="wah-auth-footnote"><i class="fa fa-heart-o" aria-hidden="true"/> Una cuenta para comprar y ser parte del comercio local.</p>
+     </section>
+    </div>
+    <footer class="wah-auth-footer">wheel-ahorra <span aria-hidden="true">·</span> Wheelwright, Santa Fe</footer>
+   </div>
+  </xpath>
+ </template>
+ <template id="auth_login" inherit_id="web.login" name="Formulario de ingreso wheel-ahorra" priority="1000">
+  <xpath expr="//form[@role='form']" position="attributes"><attribute name="t-attf-class">oe_login_form</attribute></xpath>
+  <xpath expr="//owl-component[@name='web.user_switch']" position="replace"/>
+  <xpath expr="//label[@for='login']" position="replace"><label for="login" class="form-label">Correo electrónico</label></xpath>
+  <xpath expr="//input[@name='login']" position="attributes"><attribute name="placeholder">vos@ejemplo.com</attribute><attribute name="inputmode">email</attribute></xpath>
+  <xpath expr="//label[@for='password']" position="replace"><label for="password" class="form-label">Contraseña</label></xpath>
+  <xpath expr="//input[@name='password']" position="attributes"><attribute name="placeholder">Tu contraseña</attribute></xpath>
+  <xpath expr="//button[hasclass('o_show_password')]" position="attributes"><attribute name="aria-label">Mostrar u ocultar contraseña</attribute><attribute name="title">Mostrar u ocultar contraseña</attribute></xpath>
+  <xpath expr="//button[@type='submit'][not(@name)]" position="replace"><button type="submit" class="btn btn-primary">Ingresar a mi cuenta <span aria-hidden="true">→</span></button></xpath>
+ </template>
+ <template id="auth_login_links" inherit_id="auth_signup.login" name="Accesos de cuenta wheel-ahorra" priority="1000">
+  <xpath expr="//a[@t-if='signup_enabled']" position="replace"><a t-if="signup_enabled" class="btn btn-link wah-auth-switch" t-attf-href="/web/signup?{{ keep_query() }}">¿Todavía no tenés cuenta? <strong>Creá la tuya</strong></a></xpath>
+  <xpath expr="//a[@t-if='reset_password_enabled']" position="replace"><a t-if="reset_password_enabled" class="btn btn-link btn-sm wah-auth-recover" tabindex="1" t-attf-href="/web/reset_password?{{ keep_query() }}">¿Olvidaste tu contraseña?</a></xpath>
+ </template>
+ <template id="auth_signup_form" inherit_id="auth_signup.signup" name="Crear cuenta wheel-ahorra" priority="1000">
+  <xpath expr="//label[@for='name']" position="replace"><label for="name" class="form-label">Tu nombre</label></xpath>
+  <xpath expr="//input[@name='name']" position="attributes"><attribute name="placeholder">Nombre y apellido</attribute><attribute name="autocomplete">name</attribute></xpath>
+  <xpath expr="//label[@for='login']" position="replace"><label for="login" class="form-label">Correo electrónico</label></xpath>
+  <xpath expr="//input[@name='login']" position="attributes"><attribute name="placeholder">vos@ejemplo.com</attribute><attribute name="autocomplete">username</attribute><attribute name="inputmode">email</attribute></xpath>
+  <xpath expr="//button[@type='submit']" position="replace"><button type="submit" class="btn btn-primary mb-1">Crear mi cuenta <span aria-hidden="true">→</span></button></xpath>
+  <xpath expr="//a[@role='button']" position="replace"><a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link wah-auth-switch" role="button">¿Ya tenés cuenta? <strong>Ingresá acá</strong></a></xpath>
+ </template>
+ <template id="auth_password_fields" inherit_id="auth_signup.fields" name="Contraseñas wheel-ahorra" priority="1000">
+  <xpath expr="//button[hasclass('o_show_password')]" position="attributes"><attribute name="aria-label">Mostrar u ocultar contraseña</attribute><attribute name="title">Mostrar u ocultar contraseña</attribute></xpath>
+  <xpath expr="//label[@for='password']" position="replace"><label for="password" class="form-label">Contraseña</label></xpath>
+  <xpath expr="//label[@for='confirm_password']" position="replace"><label for="confirm_password" class="form-label">Repetí tu contraseña</label></xpath>
+  <xpath expr="//input[@name='password']" position="attributes"><attribute name="autocomplete">new-password</attribute></xpath>
+  <xpath expr="//input[@name='confirm_password']" position="attributes"><attribute name="autocomplete">new-password</attribute></xpath>
+ </template>
+</odoo>

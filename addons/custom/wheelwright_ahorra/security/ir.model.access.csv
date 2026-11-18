@@ -12,3 +12,6 @@ access_wah_collection_manager,Cobros administracion,model_wah_collection,product
 access_wah_route_event_manager,Historial reparto administracion,model_wah_route_event,product.group_product_manager,1,0,0,0
 access_wah_collection_register_manager,Registrar cobro administracion,model_wah_collection_register,product.group_product_manager,1,1,1,1
 access_wah_collection_void_manager,Anular cobro administracion,model_wah_collection_void,product.group_product_manager,1,1,1,1
+access_wah_settlement_manager,Liquidaciones administracion,model_wah_settlement,product.group_product_manager,1,1,1,0
+access_wah_settlement_line_manager,Detalle liquidaciones administracion,model_wah_settlement_line,product.group_product_manager,1,0,0,0
+access_wah_offer_manager,Ofertas administracion,model_wah_offer,product.group_product_manager,1,1,1,1

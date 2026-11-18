@@ -1,6 +1,6 @@
 {
     'name': 'wheel-ahorra',
-    'version': '19.0.2.7.0',
+    'version': '19.0.3.3.0',
     'category': 'Website',
     'summary': 'Portada personalizada de Wheelwright Ahorra',
     'description': 'Personalización de la página principal integrada con Website y eCommerce de Odoo.',
@@ -10,6 +10,7 @@
         'security/ir.model.access.csv',
         'security/merchant_rules.xml',
         'security/dispatch_rules.xml',
+        'security/settlement_rules.xml',
         'views/plantilla_home.xml',
         'views/checkout.xml',
         'views/catalog.xml',
@@ -20,6 +21,11 @@
         'views/stock.xml',
         'views/delivery_windows.xml',
         'views/dispatch.xml',
+        'views/settlement.xml',
+        'views/auth.xml',
+        'views/offers.xml',
+        'views/courier_portal.xml',
+        'views/merchant_portal.xml',
     ],
     'assets': {
         'web.assets_backend': [
@@ -31,6 +37,10 @@
         'web.assets_frontend': [
             'wheelwright_ahorra/static/src/css/style.css',
             'wheelwright_ahorra/static/src/css/visual.css',
+            'wheelwright_ahorra/static/src/css/auth.css',
+            'wheelwright_ahorra/static/src/css/offers.css',
+            'wheelwright_ahorra/static/src/css/courier_portal.css',
+            'wheelwright_ahorra/static/src/css/merchant_portal.css',
             'wheelwright_ahorra/static/src/css/delivery_windows.css',
             'wheelwright_ahorra/static/src/js/checkout.js',
         ],

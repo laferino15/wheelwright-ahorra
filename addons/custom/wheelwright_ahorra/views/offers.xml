@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <record id="offer_company_rule" model="ir.rule"><field name="name">Ofertas: compañías habilitadas</field><field name="model_id" ref="model_wah_offer"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+ <template id="offers_navigation" inherit_id="wheelwright_ahorra.marketplace_shell" name="Ofertas en navegación">
+  <xpath expr="//nav[hasclass('wah-mainnav')]//a[@href='/shop']" position="after"><a href="/ofertas" t-att-class="'wah-offers-link active' if request.httprequest.path == '/ofertas' else 'wah-offers-link'"><i class="fa fa-tag" aria-hidden="true"/> Ofertas</a></xpath>
+  <xpath expr="//footer//a[@href='/shop']" position="after"><a href="/ofertas">Ofertas y promociones</a></xpath>
+ </template>
+ <template id="offer_cards" name="Tarjetas de ofertas">
+  <div class="wah-deals-grid"><article t-foreach="offer_cards" t-as="deal" class="wah-deal-card">
+   <a t-att-href="deal['product'].website_url" class="wah-deal-image"><span class="wah-deal-badge">−<t t-esc="deal['discount_label']"/></span><img t-att-src="'/web/image/product.template/%s/image_512' % deal['product'].id" t-att-alt="deal['product'].name" loading="lazy"/></a>
+   <div class="wah-deal-info"><span class="wah-deal-category" t-esc="deal['product'].public_categ_ids[:1].name or 'Compra local'"/><a class="wah-deal-name" t-att-href="deal['product'].website_url" t-esc="deal['product'].name"/>
+    <span t-if="deal['product'].wah_store_name" class="wah-deal-store"><i class="fa fa-map-marker" aria-hidden="true"/> <t t-esc="deal['product'].wah_store_name"/></span>
+    <small t-if="deal['product'].wah_catalog_sample" class="wah-sample-label">Precio de prueba · Imagen ilustrativa</small>
+    <div class="wah-deal-prices"><span class="visually-hidden">Precio anterior</span><del t-out="deal['previous']" t-options="{'widget':'monetary','display_currency':website.currency_id}"/><span class="visually-hidden">Precio en oferta</span><strong t-out="deal['current']" t-options="{'widget':'monetary','display_currency':website.currency_id}"/></div>
+    <span class="wah-deal-saving">Ahorrás <t t-out="deal['saving']" t-options="{'widget':'monetary','display_currency':website.currency_id}"/></span>
+    <a class="wah-deal-action" t-att-href="deal['product'].website_url">Ver oferta <span aria-hidden="true">→</span></a>
+   </div>
+  </article></div>
+ </template>
+ <template id="offers_home" inherit_id="wheelwright_ahorra.home_wheelwright" name="Ofertas en portada">
+  <xpath expr="//section[@id='categorias']" position="before">
+   <section class="wah-offers-home" id="ofertas"><div class="container">
+    <a href="/ofertas" class="wah-offers-banner"><span class="wah-offers-icon" aria-hidden="true"><i class="fa fa-tags"/></span><span class="wah-offers-banner-copy"><small>DALE MÁS VALOR A TU COMPRA</small><strong>Ofertas de acá.<br class="d-sm-none"/> Para aprovechar.</strong><span>Descubrí los precios especiales de tus comercios.</span></span><span class="wah-offers-banner-cta">Explorar ofertas <span aria-hidden="true">↗</span></span></a>
+    <t t-set="offer_cards" t-value="website._wah_offer_cards(limit=4)"/>
+    <div t-if="offer_cards" class="wah-offers-preview"><div class="wah-section-heading"><h2>Una buena oportunidad, cerca tuyo.</h2><a href="/ofertas" class="wah-text-link">Ver todas →</a></div><t t-call="wheelwright_ahorra.offer_cards"/></div>
+   </div></section>
+  </xpath>
+ </template>
+ <template id="offers_page" name="Ofertas y promociones">
+  <t t-call="website.layout"><t t-set="additional_title">Ofertas y promociones</t>
+   <div id="wrap" class="wah-offers-page">
+    <section class="wah-deals-hero"><div class="container"><div><a href="/shop" class="wah-deals-breadcrumb">Tienda / Ofertas</a><span class="wah-deals-kicker"><i class="fa fa-tag" aria-hidden="true"/> PRECIOS PARA APROVECHAR</span><h1>Tu compra rinde más.<br/><em>Y queda cerca.</em></h1><p>Encontrá ofertas de los comercios de Wheelwright.<br/>Elegí lo que te gusta y aprovechá el precio especial.</p><a href="#promociones" class="wah-deals-hero-button">Descubrir ofertas <span aria-hidden="true">↓</span></a></div><div class="wah-deals-ticket" aria-hidden="true"><span>WHEEL-AHORRA</span><i class="fa fa-tags"/><strong>OFERTAS<br/>LOCALES</strong><small>BUENOS PRECIOS.<br/>COMERCIOS DE ACÁ.</small></div></div></section>
+    <div class="wah-deals-benefits"><div class="container"><span><i class="fa fa-map-marker" aria-hidden="true"/> De tus comercios locales</span><span><i class="fa fa-tag" aria-hidden="true"/> Descuentos visibles</span><span><i class="fa fa-shopping-basket" aria-hidden="true"/> En una misma compra</span></div></div>
+    <section class="container wah-deals-content" id="promociones"><div class="wah-section-heading"><div><span class="wah-eyebrow wah-green">PARA MIRAR DOS VECES</span><h2>Ofertas para vos</h2></div><a href="/shop" class="wah-text-link">Ver todo el catálogo →</a></div>
+     <t t-if="offer_cards" t-call="wheelwright_ahorra.offer_cards"/>
+     <div t-else="" class="wah-deals-empty"><span class="wah-deals-empty-icon"><i class="fa fa-tags" aria-hidden="true"/></span><h3>Las próximas ofertas están en camino</h3><p>Cuando los comercios tengan promociones vigentes,<br/>las vas a encontrar todas acá.</p><a href="/shop">Mientras tanto, explorá la tienda <span aria-hidden="true">→</span></a></div>
+    </section>
+    <section class="container wah-deals-local"><i class="fa fa-heart-o" aria-hidden="true"/><div><strong>Ahorrás vos. Crece el comercio local.</strong><p>Cada compra es una forma de elegir a Wheelwright.</p></div><a href="/shop">Seguir comprando ↗</a></section>
+   </div>
+  </t>
+ </template>
+ <record id="offer_list" model="ir.ui.view"><field name="name">wah.offer.list</field><field name="model">wah.offer</field><field name="arch" type="xml"><list decoration-muted="state != 'published'"><field name="sequence" widget="handle"/><field name="product_id"/><field name="discount"/><field name="website_id"/><field name="pricelist_id"/><field name="date_start"/><field name="date_end"/><field name="state"/></list></field></record>
+ <record id="offer_form" model="ir.ui.view"><field name="name">wah.offer.form</field><field name="model">wah.offer</field><field name="arch" type="xml"><form><header><button name="action_publish" type="object" string="Publicar oferta" class="btn-primary" invisible="state == 'published'"/><button name="action_pause" type="object" string="Pausar oferta" invisible="state != 'published'"/><field name="state" widget="statusbar"/></header><sheet><div class="alert alert-info" role="status">Publicar crea una regla de descuento sobre el precio de venta en la lista elegida. El carrito utiliza esa misma regla. El bloque público solo muestra ofertas vigentes, disponibles y aplicables a la lista de precios del visitante. Pausá antes de editar.</div><group><group><field name="product_id" readonly="state == 'published'" options="{'no_create':True}" domain="[('sale_ok','=',True)]"/><field name="website_id" readonly="state == 'published'"/><field name="pricelist_id" readonly="state == 'published'"/><field name="discount" readonly="state == 'published'"/></group><group><field name="date_start" readonly="state == 'published'"/><field name="date_end" readonly="state == 'published'"/><field name="sequence"/><field name="rule_id"/></group></group></sheet></form></field></record>
+ <record id="offer_action" model="ir.actions.act_window"><field name="name">Ofertas y promociones</field><field name="res_model">wah.offer</field><field name="view_mode">list,form</field></record>
+ <menuitem id="offer_menu" name="Ofertas y promociones" parent="wheelwright_ahorra.marketplace_menu" action="offer_action" groups="product.group_product_manager" sequence="25"/>
+</odoo>

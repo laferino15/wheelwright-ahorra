@@ -32,3 +32,10 @@ Thumbs.db
 # Resultados locales de las pruebas
 tests/local/resultado_jornada_completa.json
 tests/local/RESULTADO_JORNADA.md
+
+# Copia antigua anidada y archivos vacíos accidentales
+/wheelwright-ahorra/
+/findstr
+/type
+# Salidas de cargas locales
+/scripts/local/productos_demo_ofertas.json

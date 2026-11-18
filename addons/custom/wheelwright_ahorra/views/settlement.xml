@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <record id="merchant_settlement_settings" model="ir.ui.view">
+  <field name="name">wah.merchant.settlement.settings</field><field name="model">wah.merchant</field>
+  <field name="inherit_id" ref="wheelwright_ahorra.merchant_form"/>
+  <field name="arch" type="xml"><xpath expr="//field[@name='partner_id']" position="after">
+   <field name="commission_rate" groups="product.group_product_manager"/>
+  </xpath></field>
+ </record>
+ <record id="settlement_list" model="ir.ui.view">
+  <field name="name">wah.settlement.list</field><field name="model">wah.settlement</field>
+  <field name="arch" type="xml"><list decoration-success="state == 'paid'" decoration-muted="state == 'cancelled'">
+   <field name="name"/><field name="merchant_id"/><field name="date_from"/><field name="date_to"/>
+   <field name="currency_id" column_invisible="True"/><field name="gross_amount"/>
+   <field name="commission_amount"/><field name="net_amount"/><field name="state"/><field name="paid_at"/>
+  </list></field>
+ </record>
+ <record id="settlement_form" model="ir.ui.view">
+  <field name="name">wah.settlement.form</field><field name="model">wah.settlement</field>
+  <field name="arch" type="xml"><form><header>
+   <button name="action_generate" type="object" string="Generar detalle" class="btn-primary" invisible="state != 'draft' or line_ids"/>
+   <button name="action_confirm" type="object" string="Confirmar liquidación" class="btn-primary" invisible="state != 'draft' or not line_ids" confirm="¿Confirmar los importes revisados para este comercio?"/>
+   <button name="action_pay" type="object" string="Registrar pago realizado" class="btn-primary" invisible="state != 'confirmed'" confirm="¿Confirmás que ya pagaste al comercio el importe indicado? Esta acción solo registra el pago."/>
+   <button name="action_cancel" type="object" string="Anular con motivo" invisible="state not in ('draft','confirmed')" confirm="¿Anular esta liquidación y liberar sus pedidos para una nueva?"/>
+   <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,paid"/>
+  </header><sheet>
+   <h1><field name="name"/></h1>
+   <div class="alert alert-info" role="status">Incluye productos con impuestos de pedidos entregados y cobrados, según la fecha de entrega elegida en el pedido. El envío queda fuera. La comisión se fija al generar el detalle. Registrar un pago no realiza una transferencia ni genera asientos contables.</div>
+   <group><group>
+    <field name="merchant_id" readonly="state != 'draft' or line_ids" options="{'no_create': True}"/>
+    <field name="date_from" readonly="state != 'draft' or line_ids"/><field name="date_to" readonly="state != 'draft' or line_ids"/>
+    <field name="company_id" groups="base.group_multi_company"/><field name="currency_id"/>
+   </group><group>
+    <field name="gross_amount"/><field name="commission_amount"/><field name="net_amount"/>
+   </group></group>
+   <notebook><page string="Detalle por pedido">
+    <field name="line_ids" readonly="1"><list create="0" edit="0" delete="0">
+     <field name="order_id"/><field name="preparation_id"/><field name="currency_id" column_invisible="True"/>
+     <field name="gross_amount" sum="Productos"/><field name="commission_rate"/><field name="commission_amount" sum="Comisión"/><field name="net_amount" sum="A pagar"/>
+    </list></field>
+   </page><page string="Pago e historial">
+    <group><group string="Pago al comercio">
+     <field name="payment_method" readonly="state != 'confirmed'"/>
+     <field name="payment_reference" readonly="state != 'confirmed'"/>
+     <field name="paid_at"/><field name="paid_by"/>
+    </group><group string="Confirmación"><field name="confirmed_at"/><field name="confirmed_by"/></group></group>
+    <group string="Anulación"><field name="cancel_reason" readonly="state not in ('draft','confirmed')"/><field name="cancelled_at"/><field name="cancelled_by"/></group>
+   </page></notebook>
+  </sheet></form></field>
+ </record>
+ <record id="settlement_search" model="ir.ui.view">
+  <field name="name">wah.settlement.search</field><field name="model">wah.settlement</field>
+  <field name="arch" type="xml"><search><field name="name"/><field name="merchant_id"/>
+   <filter name="unpaid" string="Sin pagar" domain="[('state','in',['draft','confirmed'])]"/>
+   <filter name="paid" string="Pagadas" domain="[('state','=','paid')]"/>
+   <filter name="cancelled" string="Anuladas" domain="[('state','=','cancelled')]"/>
+   <group><filter name="merchant" string="Comercio" context="{'group_by':'merchant_id'}"/><filter name="state" string="Estado" context="{'group_by':'state'}"/></group>
+  </search></field>
+ </record>
+ <record id="settlement_action" model="ir.actions.act_window">
+  <field name="name">Liquidaciones a comercios</field><field name="res_model">wah.settlement</field>
+  <field name="view_mode">list,form</field><field name="search_view_id" ref="settlement_search"/>
+ </record>
+ <menuitem id="settlement_menu" name="Liquidaciones a comercios" parent="wheelwright_ahorra.marketplace_menu" action="settlement_action" groups="product.group_product_manager" sequence="48"/>
+</odoo>

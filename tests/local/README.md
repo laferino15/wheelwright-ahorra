@@ -4,6 +4,7 @@ Scripts para ejecutar mediante `odoo-bin shell` en una base local de desarrollo
 preparada. No son pruebas para ejecutar en producción. Se protege explícitamente
 el nombre de base `wheelwright_ahorra_dev`.
 
+- `verificar_liquidaciones.py`: comisiones, liquidaciones, pago, anulación, permisos y vistas; revierte toda la transacción.
 - `verificar_reparto.py`: verificaciones del modelo; revierte su transacción.
 - `verificar_reparto_web.py`: vistas, RPC y portal con fixtures temporales.
 - `probar_jornada_completa.py`: última verificación integral aprobada. Usa HTTP/RPC
@@ -23,3 +24,7 @@ de correos. Los informes generados junto al script están excluidos de Git.
 Para ejecutarlos desde la consola de Odoo, abrir el archivo por ruta absoluta
 con `exec(compile(open(r"RUTA/archivo.py", encoding="utf-8").read(), "prueba", "exec"))`.
 El resultado de la última jornada está en `docs/pruebas/RESULTADO_JORNADA.md`.
+
+## Portales propios (19.0.3.3.0)
+
+`verificar_portal_comercios_web.py` verifica secciones, CSRF, stock sin perder aprobación y aislamiento de productos de otro comercio. Crea y elimina cuentas ficticias. `verificar_portal_reparto.py` verifica preparación, retiro, entrega y cobro con rollback. Ejecutarlos únicamente en desarrollo sin usuarios operando.
